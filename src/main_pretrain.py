@@ -141,9 +141,9 @@ def main():
     parser.register('type', 'bool', str2bool)
     # path path path
     parser.add_argument('--embed_filename', type=str,
-                        default='../data/embeddings/glove.6B.100d.txt')
+                        default='./data/embeddings/glove.6B.100d.txt')
     parser.add_argument('--ngram_embed_path', type=str,
-                        default='../data/embeddings/charNgram.txt')
+                        default='./data/embeddings/charNgram.txt')
 
     parser.add_argument('-p', "--per", type=str,
                         default='Bin', help='Pat or Bin')
@@ -192,9 +192,9 @@ def main():
     args.cuda = torch.cuda.is_available()
 
     args.term_strings = pickle.load(
-        open('../data/mappings/term_string_mapping.pkl', 'rb'))
+        open('./data/mappings/term_string_mapping.pkl', 'rb'))
     dataset = pickle.load(open(
-        '../data/sym_data/sub_neighbors_dict_ppmi_per' + args.per + '_' + args.days + '.pkl', 'rb'))
+        './data/sym_data/sub_neighbors_dict_ppmi_per' + args.per + '_' + args.days + '.pkl', 'rb'))
 
     # prepare context labels
     context_terms = list(dataset.keys())
@@ -282,7 +282,7 @@ def main():
     '''
     if args.neg_sampling:
         degree_list = pickle.load(
-            open('../data/sym_data/degree_list_perBin_1.pkl', 'rb'))
+            open('./data/sym_data/degree_list_perBin_1.pkl', 'rb'))
         weights = np.zeros(args.node_vocab_size)
         for y in degree_list:
             if y[0] in args.node_to_id:
