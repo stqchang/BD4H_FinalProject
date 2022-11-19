@@ -5,7 +5,6 @@ import pickle
 import argparse
 import time
 import numpy as np
-import networkx as nx
 import sklearn.metrics
 from datetime import datetime
 from collections import Counter
