@@ -69,11 +69,11 @@ parser.add_argument('--lr_decay', type=float, default=0.05,
 
 # path to external files
 parser.add_argument("--embed_filename", type=str,
-                    default='../data/embeddings/glove.6B.100d.txt')
+                    default='./data/glove.6B.100d.txt')
 parser.add_argument('--node_embed_path', type=str,
-                    default='../data/embeddings/line2nd_ttcooc_embedding.txt')
+                    default='./data/line2nd_ttcooc_embedding.txt')
 parser.add_argument('--ngram_embed_path', type=str,
-                    default='../data/embeddings/charNgram.txt')
+                    default='./data/charNgram.txt')
 # parser.add_argument('--restore_para_file', type=str, default='./final_pretrain_cnn_model_parameters.pkl')
 parser.add_argument('--restore_model_path', type=str,
                     required=True, default='')

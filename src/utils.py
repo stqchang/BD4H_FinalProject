@@ -7,7 +7,7 @@ import distance
 import jellyfish
 import re
 from collections import Counter
-from torchnlp.word_to_vector import CharNGram
+#from torchnlp.word_to_vector import CharNGram
 from sklearn.metrics.pairwise import cosine_similarity
 
 import torch
