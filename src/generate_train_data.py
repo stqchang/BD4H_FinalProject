@@ -95,10 +95,10 @@ def main():
 
         i += 1
 
-    with open('./data/sub_neighbors_dict_ppmi_perBin_1.pkl', 'wb') as handle:
+    with open('./data/sym_data/sub_neighbors_dict_ppmi_perBin_1.pkl', 'wb') as handle:
         pickle.dump(dataset, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    with open('./data/train_multi_perBin_1.pkl', 'wb') as handle:
+    with open('./data/sym_data/train_multi_perBin_1.pkl', 'wb') as handle:
         pickle.dump(output_list, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # sample test
@@ -123,7 +123,7 @@ def main():
 
         i += 1
 
-    with open('./data/test_multi_perBin_1.pkl', 'wb') as handle:
+    with open('./data/sym_data/test_multi_perBin_1.pkl', 'wb') as handle:
         pickle.dump(test_output_list, handle,
                     protocol=pickle.HIGHEST_PROTOCOL)
 

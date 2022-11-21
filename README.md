@@ -34,7 +34,7 @@ generate_train_data.py generates the required training and testing dataset from 
 python src/generate_train_data.py
 ```
 
-This will generate three pickle files under the data folder. Two are required for model training, and the third is the terms used for testing.
+This will generate three pickle files under the data folder. Two are required for model training, and the third is the terms used for testing. These files are provided in the google drive under the respective folders.
 
 1. sub_neighbors_dict_ppmi_perBin_1.pkl
 2. train_multi_perBin_1.pkl
@@ -42,20 +42,20 @@ This will generate three pickle files under the data folder. Two are required fo
 
 ## Training context prediction module
 
-main_pretrain.py trains the context prediction module. To run main_pretrain.py, run the following command from BD4H_FINALPROJECT.
+main_pretrain.py trains the context prediction module. To run main_pretrain.py, run the following command from BD4H_FINALPROJECT/src.
 
 ```
-python src/main_pretrain.py
+python main_pretrain.py
 ```
 
-This will generate "Bin_1_pretrain_model_dict.pkl" and "snapshot_epoch_99.pt".
+This will generate "Bin_1_pretrain_model_dict.pkl" in data/saved_models and "snapshot_epoch_99.pt" in data/saved_models/output_pretrained, assuming that none of the default arguments are changed. These files are provided in the google drive under the respective folders.
 
 ## Training SurfCon model
 
-main_dym.py trains the SurfCon model. To run main_dym.py, run the following command from BD4H_FINALPROJECT.
+main_dym.py trains the SurfCon model. To run main_dym.py, run the following command from BD4H_FINALPROJECT/src.
 
 ```
-python src/main_dym.py
+python main_dym.py
 ```
 
-This will generate "best_epoch_0.pt".
+This will generate "dev_test_data_perBin_1_2000.pkl" in the data/sym_data folder and "best_epoch\_\[\#\].pt" in data/saved_models/rank_model_perBin_1, assuming that none of the default arguments are changed. These files are provided in the google drive under the respective folders; for our output, we had best_epoch_0.pt.
