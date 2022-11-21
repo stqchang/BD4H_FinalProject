@@ -1,14 +1,36 @@
 # BD4H_FinalProject
 
-conda install pytorch==1.0.0 torchvision==0.2.1 cuda100 -c pytorch
+This repository contains the code used to train the SurfCon model, which is taken from the original paper: https://arxiv.org/pdf/1906.09285.pdf and inspired by the original code: https://github.com/zhenwang9102/SurfCon.
 
-pip install torchnlp
+## Installation
 
-python==3.7.3
-numpy==1.16.2
-networkx==2.2
-scipy==1.2.1
-scikit-learn==0.20.3
-tqdm==4.28.1
-#pytorch==1.0.1
-jellyfish==0.7.1
+Ensure that all packages in requirements.txt are installed.
+
+## Data folder
+
+The raw datasets are too large to put on github. We have therefore put it on a google drive. Before running any code, ensure that the following files are copied to the data folder, where the data folder exists at the same level as src.
+
+1. 1_term_ID_to_string
+2. 2a_concept_ID_to_string
+3. 2b_concept_ID_to_CUI
+4. 3_term_ID_to_concept_ID
+5. cofreqs_terms_perBin_1d
+6. singlets_terms_perBin_1d
+
+## Dataset creation
+
+generate_train_data.py generates the required training and testing dataset from the raw dataset. To run generate_train_data.py, run the following command from BD4H_FINALPROJECT.
+
+```
+python src/generate_train_data.py
+```
+
+This will generate three pickle files under the data folder. Two are required for model training, and the third is the terms used for testing.
+
+1. sub_neighbors_dict_ppmi_perBin_1.pkl
+2. train_multi_perBin_1.pkl
+3. test_multi_perBin_1.pkl
+
+## Training context prediction module
+
+## Training SurfCon model
