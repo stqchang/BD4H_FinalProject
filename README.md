@@ -16,9 +16,7 @@ The raw datasets are too large to put on github. We have therefore put it on a g
 4. 3_term_ID_to_concept_ID
 5. cofreqs_terms_perBin_1d
 6. singlets_terms_perBin_1d
-7. charNgram.txt
-8. line2nd_ttcooc_embedding.txt
-9. glove.6B.100d.txt
+
 
 There are several subfolders under data folders which are used by the model for embedding and mapping. 
 
