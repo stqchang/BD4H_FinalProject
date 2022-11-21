@@ -23,6 +23,8 @@ The raw datasets are too large to put on github. We have therefore put it on a g
 11. mappings/term_concept_mapping.pkl
 12. mappings/term_string_mapping.pkl
 
+Note that there are several subfolders under data folders which are used by the model for embedding and mapping.
+
 ## Dataset creation
 
 generate_train_data.py generates the required training and testing dataset from the raw dataset. To run generate_train_data.py, run the following command from BD4H_FINALPROJECT.
