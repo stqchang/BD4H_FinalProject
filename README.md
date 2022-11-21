@@ -16,6 +16,7 @@ The raw datasets are too large to put on github. We have therefore put it on a g
 4. 3_term_ID_to_concept_ID
 5. cofreqs_terms_perBin_1d
 6. singlets_terms_perBin_1d
+   ...
 
 ## Dataset creation
 
@@ -33,4 +34,20 @@ This will generate three pickle files under the data folder. Two are required fo
 
 ## Training context prediction module
 
+main_pretrain.py trains the context prediction module. To run main_pretrain.py, run the following command from BD4H_FINALPROJECT.
+
+```
+python src/main_pretrain.py
+```
+
+This will generate ....
+
 ## Training SurfCon model
+
+main_dym.py trains the SurfCon model. To run main_dym.py, run the following command from BD4H_FINALPROJECT.
+
+```
+python src/main_dym.py
+```
+
+This will generate ....
