@@ -8,7 +8,7 @@ Ensure that all packages in requirements.txt are installed.
 
 ## Data folder
 
-The raw datasets are too large to put on github. We have therefore put it on a google drive. Before running any code, ensure that the following files are copied to the data folder, where the data folder exists at the same level as src.
+The raw datasets are too large to put on github. We have therefore put it on a google drive: https://drive.google.com/drive/u/1/folders/1cgPAdU0fCseDvFzW06raTABW6-de0UWc. Before running any code, ensure that the following files are copied to the data folder, where the data folder exists at the same level as src.
 
 1. 1_term_ID_to_string
 2. 2a_concept_ID_to_string
