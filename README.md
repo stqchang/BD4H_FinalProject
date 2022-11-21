@@ -42,7 +42,7 @@ main_pretrain.py trains the context prediction module. To run main_pretrain.py, 
 python src/main_pretrain.py
 ```
 
-This will generate ....
+This will generate "Bin_1_pretrain_model_dict.pkl" and "snapshot_epoch_99.pt".
 
 ## Training SurfCon model
 
@@ -52,4 +52,4 @@ main_dym.py trains the SurfCon model. To run main_dym.py, run the following comm
 python src/main_dym.py
 ```
 
-This will generate ....
+This will generate "best_epoch_0.pt".
