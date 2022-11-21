@@ -22,6 +22,7 @@ The raw datasets are too large to put on github. We have therefore put it on a g
 10. mappings/concept_term_mapping.pkl
 11. mappings/term_concept_mapping.pkl
 12. mappings/term_string_mapping.pkl
+13. sym_data/all_iv_term_perBin_1.pkl
 
 Note that there are several subfolders under data folders which are used by the model for embedding and mapping.
 
