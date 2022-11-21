@@ -3,11 +3,12 @@ import sys
 import re
 import pickle
 import numpy as np
+import networkx as nx
 import distance
 import jellyfish
 import re
 from collections import Counter
-#from torchnlp.word_to_vector import CharNGram
+from torchnlp.word_to_vector import CharNGram
 from sklearn.metrics.pairwise import cosine_similarity
 
 import torch
@@ -80,8 +81,7 @@ def unsupervised_ranking(idx_data, query_func, cand_func, args):
             else:
                 query = query_func(sample[0])
 
-            candidates = np.concatenate(
-                [cand_func(x[0]) for x in sample[1]], 0)
+            candidates = np.concatenate([cand_func(x[0]) for x in sample[1]], 0)
         logits = cosine_similarity(query, candidates).reshape(-1)
 
         all_logits.append(logits)
@@ -140,8 +140,7 @@ def cal_distance_for_all_query(querys, candidates, query_func, cand_func, num_ne
 
     neighbors = {}
     for i in range(len(querys)):
-        neighbors[idx_to_query[i]] = [idx_to_terms[x]
-                                      for x in argsort_mat[i][::-1][:num_nearest_k]]
+        neighbors[idx_to_query[i]] = [idx_to_terms[x] for x in argsort_mat[i][::-1][:num_nearest_k]]
     return neighbors
 
 
@@ -149,7 +148,7 @@ def make_idx_one_term(dataset, args):
     # dataset: a list of term ids
     data_dict_list = []
     for cur_term in dataset:
-        if type(cur_term) is not str:
+        if type(cur_term ) is not str:
             cur_dict = {}
             cur_dict['id'] = cur_term
             cur_dict['str'] = args.term_strings[cur_term]
@@ -173,8 +172,7 @@ def make_idx_one_term(dataset, args):
             cur_dict['ngram_ids'] = ngram_ids
 
             word_list = args.term_strings[cur_term].split()
-            cur_dict['word_ids'] = [
-                args.word_to_id[w if w in args.word_to_id else '<UNK>'] for w in word_list]
+            cur_dict['word_ids'] = [args.word_to_id[w if w in args.word_to_id else '<UNK>'] for w in word_list]
             cur_dict['word_len'] = len(word_list)
 
             # collect golden contexts
@@ -207,8 +205,7 @@ def make_idx_one_term(dataset, args):
             cur_dict['ngram_ids'] = ngram_ids
 
             word_list = cur_term.split()
-            cur_dict['word_ids'] = [
-                args.word_to_id[w if w in args.word_to_id else '<UNK>'] for w in word_list]
+            cur_dict['word_ids'] = [args.word_to_id[w if w in args.word_to_id else '<UNK>'] for w in word_list]
             cur_dict['word_len'] = len(word_list)
 
         data_dict_list.append(cur_dict)
@@ -270,8 +267,7 @@ def preprocess(sample, args, testing=False):
         x1_list, _ = batch_process_terms(sample['t1_dicts'], args)
         x1_gold_ctx = sample['t1_dicts'][0]['gold_ctx']
 
-    x2_list, onehot_labels = batch_process_terms(
-        sample['t2_dicts'], args, sample['labels'])
+    x2_list, onehot_labels = batch_process_terms(sample['t2_dicts'], args, sample['labels'])
     x2_gold_ctx = [x['gold_ctx'] for x in sample['t2_dicts']]
 
     x1_list.append(x1_gold_ctx)
@@ -292,14 +288,12 @@ def pad_sequence(list_ids, min_length=0, max_length=None, padder=0):
 
 
 def pad_pad_sequence(list_list_ids, min_length=0, list_padder=0):
-    max_char_length = max([len(x)
-                          for w in list_list_ids for x in w] + [min_length])
+    max_char_length = max([len(x) for w in list_list_ids for x in w] + [min_length])
     max_list_length = max(len(x) for x in list_list_ids)
     new_list_list = []
     for cur_list in list_list_ids:
         cur_array = pad_sequence(cur_list, min_length, max_char_length)
-        pad_zeros = np.ones(
-            (max_list_length - cur_array.shape[0], max_char_length)) * list_padder
+        pad_zeros = np.ones((max_list_length - cur_array.shape[0], max_char_length)) * list_padder
         cur_array = np.concatenate([cur_array, pad_zeros], axis=0)
 #         if cur_array.shape[0] < max_list_length:
 #             pad_zeros = np.zeros((max_list_length - cur_array.shape[0], max_char_length))
@@ -314,19 +308,16 @@ def preprocess_baseline(sample, args):
 
     if args.pair_score:
         onehot_labels = np.array(labels)
-        features = np.concatenate(
-            [args.score_func(sample[0], x[0]) for x in sample[1]], 0)
+        features = np.concatenate([args.score_func(sample[0], x[0]) for x in sample[1]], 0)
         return [features], onehot_labels
 
     else:
         if args.batch_embed:
             query, _ = args.query_func(sample[0])
-            candidates, labels = args.cand_func(
-                [x[0] for x in sample[1]], labels)
+            candidates, labels = args.cand_func([x[0] for x in sample[1]], labels)
         else:
             query = args.query_func(sample[0])
-            candidates = np.concatenate(
-                [args.cand_func(x[0]) for x in sample[1]], 0)
+            candidates = np.concatenate([args.cand_func(x[0]) for x in sample[1]], 0)
 
         t1_vecs = np.repeat(query, len(sample[1]), axis=0)
         t2_vecs = candidates
@@ -340,18 +331,15 @@ def preprocess_relation(batch_data, args):
     labels = np.array([args.labels_mapping[x[-1]] for x in batch_data])
 
     if args.pair_score:
-        features = np.concatenate(
-            [args.score_func(x[0], x[1]) for x in batch_data], 0)
+        features = np.concatenate([args.score_func(x[0], x[1]) for x in batch_data], 0)
         return [features], labels
     else:
         if args.batch_embed:
             querys, _ = args.query_func([x[0] for x in batch_data])
             candidates, _ = args.cand_func([x[1] for x in batch_data])
         else:
-            querys = np.concatenate([args.query_func(x[0])
-                                    for x in batch_data], 0)
-            candidates = np.concatenate(
-                [args.cand_func(x[1]) for x in batch_data], 0)
+            querys = np.concatenate([args.query_func(x[0]) for x in batch_data], 0)
+            candidates = np.concatenate([args.cand_func(x[1]) for x in batch_data], 0)
 
     return [querys, candidates], labels
 
@@ -374,7 +362,8 @@ def random_neg_sampling(pos_pairs, all_candidates, term_concept_mapping, neg_num
         for pos_pair in pos_pairs:
             t1 = pos_pair[0]
             cur_list = [(x, 1) for x in pos_pair[1]]
-            exists = [t1] + pos_pair[1]
+            # print('pos_pair', pos_pair[1])
+            exists = [t1] + list(pos_pair[1])
             count = 0
             while count < neg_number:
                 # t2 = np.random.choice(all_candidates)
@@ -408,8 +397,7 @@ def filter_sim_terms(pairs, term_strings):
     for pair in pairs:
         query = pair[0]
         cands = pair[1]
-        new_cands = [x for x in cands if not is_string_similar(
-            term_strings[query], term_strings[x])]
+        new_cands = [x for x in cands if not is_string_similar(term_strings[query], term_strings[x])]
         if new_cands:
             new_pairs.append((query, new_cands))
 
@@ -511,7 +499,7 @@ def mean_average_precision(rs):
 def eval_metric(logits, labels, metric='mrr'):
     # print(logits[0], labels[0])
     # input: (list of) list of scores, numpy arrays
-    assert (type(labels) == list)
+    assert(type(labels) == list)
     metric = metric.lower()
     rs = []
     score = 0
@@ -562,7 +550,7 @@ def adjust_learning_rate(optimizer, lr):
 
 
 def ngrams_pretrain(string, n):
-    assert (n > 0)
+    assert(n > 0)
     # add START and END symbol
     string = re.sub(r'[,-./]|\sBD', r'', string)
     if n > 1:
