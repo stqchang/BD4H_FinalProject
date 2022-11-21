@@ -40,7 +40,7 @@ def sample_terms(query_terms_list, rate=0.015):
 
 
 def main():
-    term_to_string, term_to_concept, concept_to_CUI, concept_to_string = load_mapping_files()
+    _, term_to_concept, concept_to_CUI, _ = load_mapping_files()
 
     co_occ, singlet = load_freqs()
 
@@ -95,10 +95,10 @@ def main():
 
         i += 1
 
-    with open('C://Users//wesle//Documents//sue_gtech//BD4H//BD4H_FinalProject//data//sub_neighbors_dict_ppmi_perBin_1.pkl', 'wb') as handle:
+    with open('./data/sub_neighbors_dict_ppmi_perBin_1.pkl', 'wb') as handle:
         pickle.dump(dataset, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    with open('C://Users//wesle//Documents//sue_gtech//BD4H//BD4H_FinalProject//data//train_multi_perBin_1.pkl', 'wb') as handle:
+    with open('./data/train_multi_perBin_1.pkl', 'wb') as handle:
         pickle.dump(output_list, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # sample test
@@ -123,8 +123,9 @@ def main():
 
         i += 1
 
-    with open('C://Users//wesle//Documents//sue_gtech//BD4H//BD4H_FinalProject//data//test_multi_perBin_1.pkl', 'wb') as handle:
-        pickle.dump(test_output_list, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open('./data/test_multi_perBin_1.pkl', 'wb') as handle:
+        pickle.dump(test_output_list, handle,
+                    protocol=pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == '__main__':
