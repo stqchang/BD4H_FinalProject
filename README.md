@@ -16,9 +16,12 @@ The raw datasets are too large to put on github. We have therefore put it on a g
 4. 3_term_ID_to_concept_ID
 5. cofreqs_terms_perBin_1d
 6. singlets_terms_perBin_1d
-
-
-There are several subfolders under data folders which are used by the model for embedding and mapping. 
+7. embedding/charNgram.txt
+8. embedding/glove.6B.100d.txt
+9. embedding/line2d_ttcooc_embedding.txt
+10. mappings/concept_term_mapping.pkl
+11. mappings/term_concept_mapping.pkl
+12. mappings/term_string_mapping.pkl
 
 ## Dataset creation
 
