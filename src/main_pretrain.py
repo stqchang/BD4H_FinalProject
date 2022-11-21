@@ -5,6 +5,7 @@ import pickle
 import argparse
 import time
 import numpy as np
+import networkx as nx
 import sklearn.metrics
 from datetime import datetime
 from collections import Counter
@@ -46,7 +47,8 @@ def make_idx_data_term(dataset, args):
         label_vec = np.zeros(args.node_vocab_size)
         for y in cur_sample[1]:
             if y[0] in args.node_to_id:
-                label_vec[args.node_to_id[y[0]]] = y[1]
+                # changed y[1] to y[2] to use count instead of ppmi which has 0 values
+                label_vec[args.node_to_id[y[0]]] = y[2]
                 # label_vec[args.node_to_id[y[0]]] = 1
         cur_dict['y'] = label_vec / np.sum(label_vec)
 
@@ -140,9 +142,9 @@ def main():
     parser.register('type', 'bool', str2bool)
     # path path path
     parser.add_argument('--embed_filename', type=str,
-                        default='./data/glove.6B.100d.txt')
+                        default='../data/embeddings/glove.6B.100d.txt')
     parser.add_argument('--ngram_embed_path', type=str,
-                        default='./data/charNgram.txt')
+                        default='../data/embeddings/charNgram.txt')
 
     parser.add_argument('-p', "--per", type=str,
                         default='Bin', help='Pat or Bin')
@@ -156,7 +158,7 @@ def main():
     parser.add_argument('--word_embed_dim', type=int, default=100)
 
     #parser.add_argument("--num_epochs", type=int, default=10000, help="number of epochs for training")
-    parser.add_argument("--num_epochs", type=int, default=5,
+    parser.add_argument("--num_epochs", type=int, default=100,
                         help="number of epochs for training")
     parser.add_argument("--batch_size", type=int,
                         default=512, help="batch size")
@@ -174,7 +176,7 @@ def main():
     parser.add_argument("--save_best", type='bool', default=True,
                         help='save model in the best epoch or not')
     parser.add_argument("--save_dir", type=str,
-                        default='./saved_models/saved_pretrained')
+                        default='../data/saved_models/output_pretrained')
     parser.add_argument("--save_interval", type=int,
                         default=1, help='intervals for saving models')
 
@@ -191,15 +193,15 @@ def main():
     args.cuda = torch.cuda.is_available()
 
     args.term_strings = pickle.load(
-        open('./data/term_string_mapping.pkl', 'rb'))
+        open('../data/mappings/term_string_mapping.pkl', 'rb'))
     dataset = pickle.load(open(
-        './data/sub_neighbors_dict_ppmi_per' + args.per + '_' + args.days + '.pkl', 'rb'))
+        '../data/sym_data/sub_neighbors_dict_ppmi_per' + args.per + '_' + args.days + '_1000.pkl', 'rb'))
 
     # prepare context labels
     context_terms = list(dataset.keys())
     print('Total number of candidates: ', len(context_terms))
 
-    reuse_stored_path = './saved_models/{0}_{1}_pretrain_model_dict.pkl'.format(
+    reuse_stored_path = '../data/saved_models/{0}_{1}_pretrain_model_dict.pkl'.format(
         args.per, args.days)
     if os.path.exists(reuse_stored_path):
         model_dict = pickle.load(open(reuse_stored_path, 'rb'))
@@ -236,6 +238,7 @@ def main():
         args.ngram_vocab_size = len(ngram_to_id)
 
         list_phrases = args.term_strings.values()
+
         word_vocab, word_to_id, id_to_word, pre_train_words = loader.w2v_mapping_pretrain(
             list_phrases, args)
         args.pre_train_words = pre_train_words
@@ -281,7 +284,7 @@ def main():
     '''
     if args.neg_sampling:
         degree_list = pickle.load(
-            open('./data/sym_data/degree_list_perBin_1.pkl', 'rb'))
+            open('../data/sym_data/degree_list_perBin_1.pkl', 'rb'))
         weights = np.zeros(args.node_vocab_size)
         for y in degree_list:
             if y[0] in args.node_to_id:
