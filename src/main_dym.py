@@ -53,7 +53,7 @@ parser.add_argument('--bi_out_dim', type=int, default=50,
 parser.add_argument('--use_context', type='bool', default=True)
 parser.add_argument('--do_ctx_interact', type='bool', default=True)
 
-parser.add_argument("--num_epochs", type=int, default=10,
+parser.add_argument("--num_epochs", type=int, default=5,
                     help="number of epochs for training")
 parser.add_argument("--log_interval", type=int,
                     default=2000, help='step interval for log')
@@ -61,9 +61,11 @@ parser.add_argument("--test_interval", type=int, default=1,
                     help='epoch interval for testing')
 parser.add_argument("--early_stop_epochs", type=int, default=10)
 parser.add_argument("--metric", type=str, default='map', help='mrr or map')
-parser.add_argument('--learning_rate', type=float, default=0.0001)
+#baseline lr = 0.0001
+parser.add_argument('--learning_rate', type=float, default=0.001)
 parser.add_argument('--min_epochs', type=int, default=10,
                     help='minimum number of epochs')
+#default value = 5.0
 parser.add_argument('--clip_grad', type=float, default=5.0)
 parser.add_argument('--lr_decay', type=float, default=0.05,
                     help='decay ratio of learning rate')
@@ -77,7 +79,7 @@ parser.add_argument('--ngram_embed_path', type=str,
                     default='../data/embeddings/charNgram.txt')
 # parser.add_argument('--restore_para_file', type=str, default='./final_pretrain_cnn_model_parameters.pkl')
 parser.add_argument('--restore_model_path', type=str, required=False,
-                    default='../data/saved_models/output_pretrained/snapshot_epoch_99.pt')
+                    default='../data/saved_models/output_pretrained/snapshot_epoch_2000_original.pt')
 parser.add_argument('--restore_idx_data', type=str, default='')
 parser.add_argument("--logging", type='bool', default=False)
 parser.add_argument("--log_name", type=str, default='empty.txt')
